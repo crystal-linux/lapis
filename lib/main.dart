@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
+import 'package:window_size/window_size.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,10 +32,14 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+void setWindowSize() {
+  setWindowMinSize(Size(900, 600));
+  setWindowMaxSize(Size(900, 600));
+}
+
 run(setOutput, running, setRunning) async {
   if (!running) {
-    var process =
-        await Process.start('pkexec', ['/opt/lapis/scripts/convert.sh']);
+    var process = await Process.start('scripts/lapisemu.sh', []);
     process.stdout.transform(utf8.decoder).forEach(setOutput);
     setRunning();
   }
@@ -43,8 +48,10 @@ run(setOutput, running, setRunning) async {
 class _MyHomePageState extends State<MyHomePage> {
   bool running = false;
   String output = "";
+
   @override
   Widget build(BuildContext context) {
+    setWindowSize();
     run(
         (value) {
           setState(() {
@@ -57,7 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
             running = true;
           });
         });
-    print(output);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       body: Center(
