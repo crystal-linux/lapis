@@ -31,20 +31,20 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  run(setOutput, running, setRunning) async {
-    if (!running) {
-      var process =
-          await Process.start('pkexec', ['/opt/lapis/scripts/convert.sh']);
-      process.stdout.transform(utf8.decoder).forEach(setOutput);
-      setRunning(true);
-    }
+run(setOutput, running, setRunning) async {
+  if (!running) {
+    var process =
+        await Process.start('pkexec', ['/opt/lapis/scripts/convert.sh']);
+    process.stdout.transform(utf8.decoder).forEach(setOutput);
+    setRunning();
   }
+}
 
+class _MyHomePageState extends State<MyHomePage> {
+  bool running = false;
+  String output = "";
   @override
   Widget build(BuildContext context) {
-    String output = "";
-    bool running = false;
     run(
         (value) {
           setState(() {
@@ -57,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
             running = true;
           });
         });
+    print(output);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       body: Center(
@@ -70,12 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.black),
-                color: Color.fromARGB(255, 15, 15, 15),
+                color: const Color.fromARGB(255, 15, 15, 15),
               ),
               child: SingleChildScrollView(
                 reverse: true,
                 child: Text(
-                  "test",
+                  output,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,
@@ -85,10 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+            const SizedBox(height: 30),
             Text(
-              output
-                      .toString()
-                      .contains("Installation finished! You may reboot now!")
+              output.toString().contains("Welcome to Crystal Linux. :)")
                   ? "Conversion finished, you can close this window now! Have fun with crystal!"
                   : "Please do not close this window until the conversion is finished.",
               style: const TextStyle(
