@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Comment=Flutter GUI to convert arch to crystal
+Name=Lapis
+Icon=lapis
+Exec=lapis
+Categories=System
