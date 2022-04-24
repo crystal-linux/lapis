@@ -39,7 +39,7 @@ void setWindowSize() {
 
 run(setOutput, running, setRunning) async {
   if (!running) {
-    var process = await Process.start('scripts/lapisemu.sh', []);
+    var process = await Process.start('/opt/lapis/scripts/lapisemu.sh', []);
     process.stdout.transform(utf8.decoder).forEach(setOutput);
     setRunning();
   }
