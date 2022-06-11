@@ -3,6 +3,7 @@ pkgname=lapis
 pkgver=1.0.0
 pkgrel=1
 pkgdesc="Flutter GUI to convert arch to crystal"
+license=('GPL3')
 arch=('any')
 url="https://git.tar.black/crystal/programs/lapis"
 depends=('gtk3' 'jade')
